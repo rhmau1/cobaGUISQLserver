@@ -10,3 +10,16 @@ C:\Users\hp\source\repos\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.csproj.CoreC
 C:\Users\hp\source\repos\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.exe
 C:\Users\hp\source\repos\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.pdb
 C:\Users\hp\source\repos\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.Form2.resources
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\bin\Debug\cobaGuiSQL.exe.config
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\bin\Debug\cobaGuiSQL.exe
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\bin\Debug\cobaGuiSQL.pdb
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.csproj.AssemblyReference.cache
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.csproj.SuggestedBindingRedirects.cache
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.Form1.resources
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.Form2.resources
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.Form3.resources
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.Properties.Resources.resources
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.csproj.GenerateResource.cache
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.csproj.CoreCompileInputs.cache
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.exe
+C:\Users\hp\source\cobaGUISQLserver\cobaGuiSQL\cobaGuiSQL\obj\Debug\cobaGuiSQL.pdb

@@ -30,14 +30,7 @@ namespace cobaGuiSQL
                 sqlDa.Fill(dtbl);
 
                 dtgv1.AutoGenerateColumns = false;
-                dtgv1.DataSource = dtbl;
-
-                DataGridViewButtonColumn btnDelete = new DataGridViewButtonColumn();
-                btnDelete.HeaderText = "Delete";
-                btnDelete.Name = "btnDelete";
-                btnDelete.Text = "Delete";
-                btnDelete.UseColumnTextForButtonValue = true;
-                dtgv1.Columns.Add(btnDelete);
+                dtgv1.DataSource = dtbl;                
 
                 dtgv1.CellContentClick += dataGridView1_CellContentClick;
 
@@ -52,25 +45,45 @@ namespace cobaGuiSQL
                 {
                     if (MessageBox.Show(string.Format("Apakah anda yakin ingin menghapus data?"),"Konfirmasi",  MessageBoxButtons.YesNo) == DialogResult.Yes)
                     {
-                        string NIP = dtgv1.Rows[e.RowIndex].Cells["NIP"].Value.ToString();
+                        string ID = dtgv1.Rows[e.RowIndex].Cells["ID"].Value.ToString();
 
-                        DeleteData(NIP);
+                        DeleteData(ID);
 
                         MessageBox.Show("Data berhasil dihapus");
                     }
                 }
+                else if (dtgv1.Columns[e.ColumnIndex].Name == "btnUpdate")
+                {
+                    string ID = dtgv1.Rows[e.RowIndex].Cells["ID"].Value.ToString();
+                    string NIP = dtgv1.Rows[e.RowIndex].Cells["NIP"].Value.ToString();
+                    string NAMA_GURU = dtgv1.Rows[e.RowIndex].Cells["NAMA_GURU"].Value.ToString();
+                    string GENDER = dtgv1.Rows[e.RowIndex].Cells["GENDER"].Value.ToString();
+                    string MAPEL = dtgv1.Rows[e.RowIndex].Cells["MAPEL"].Value.ToString();
+                    string TANGGAL_LAHIR = dtgv1.Rows[e.RowIndex].Cells["TANGGAL_LAHIR"].Value.ToString();                    
+                    string GAJI = dtgv1.Rows[e.RowIndex].Cells["GAJI"].Value.ToString();
+
+                    Form3 form3 = new Form3();
+                    form3.dataID = ID;
+                    form3.dataNIP = NIP;
+                    form3.dataNAMA = NAMA_GURU;
+                    form3.dataGENDER = GENDER;
+                    form3.dataMAPEL = MAPEL;
+                    form3.dataTANGGAL = TANGGAL_LAHIR;
+                    form3.dataGAJI = GAJI;
+                    form3.Show();
+                }
             }
         }
-
-        private void DeleteData(string NIP)
+                
+        private void DeleteData(string ID)
         {
             string connectionString = "Server=DESKTOP-SD43K3H\\SQLEXPRESS;Initial Catalog=DBGURU;Integrated Security=True;";
-            string query = "UPDATE TBGURU SET IS_DELETED = 1  WHERE NIP = @nip";
+            string query = "UPDATE TBGURU SET IS_DELETED = 1  WHERE ID = @id";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
                 SqlCommand cmd = new SqlCommand(query, connection);
-                cmd.Parameters.AddWithValue("@nip", NIP);
+                cmd.Parameters.AddWithValue("@id", ID);
                 connection.Open();
                 cmd.ExecuteNonQuery();
             }
