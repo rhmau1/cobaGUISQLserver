@@ -18,7 +18,7 @@ namespace cobaGuiSQL
         public Form1()
         {
             InitializeComponent();
-        }
+        }        
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -33,9 +33,11 @@ namespace cobaGuiSQL
                 dtgv1.DataSource = dtbl;                
 
                 dtgv1.CellContentClick += dataGridView1_CellContentClick;
-
+                
             }
         }
+
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -50,6 +52,8 @@ namespace cobaGuiSQL
                         DeleteData(ID);
 
                         MessageBox.Show("Data berhasil dihapus");
+
+                        RefreshDataGridView();
                     }
                 }
                 else if (dtgv1.Columns[e.ColumnIndex].Name == "btnUpdate")
@@ -80,11 +84,11 @@ namespace cobaGuiSQL
             string connectionString = "Server=DESKTOP-SD43K3H\\SQLEXPRESS;Initial Catalog=DBGURU;Integrated Security=True;";
             string query = "UPDATE TBGURU SET IS_DELETED = 1  WHERE ID = @id";
 
-            using (SqlConnection connection = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand(query, connection);
+                SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", ID);
-                connection.Open();
+                conn.Open();
                 cmd.ExecuteNonQuery();
             }
         }
@@ -96,19 +100,35 @@ namespace cobaGuiSQL
             form2.Show();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        public void RefreshDataGridView()
         {
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM TBGURU WHERE IS_DELETED = 'false';", conn);
-                DataTable dtbl = new DataTable();
-                sqlDa.Fill(dtbl);
+                // query data dari database
+                string query = "SELECT * FROM TBGURU WHERE IS_DELETED = 'false';";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                // mengisi DataGridView dengan data terbaru dari database
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
 
                 dtgv1.AutoGenerateColumns = false;
-                dtgv1.DataSource = dtbl;
+                dtgv1.DataSource = table;
             }
+        }        
+
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form4 form4 = new Form4();
+            form4.Show();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            RefreshDataGridView();
+        }
     }
 }

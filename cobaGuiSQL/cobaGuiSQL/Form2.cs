@@ -18,12 +18,12 @@ namespace cobaGuiSQL
         public Form2()
         {
             InitializeComponent();
-        }
+        }        
 
         private void button2_Click(object sender, EventArgs e)
         {
             this.Close();
-        }
+        }        
 
         private void Form2_Load(object sender, EventArgs e)
         {
