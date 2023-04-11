@@ -41,15 +41,22 @@ namespace cobaGuiSQL
             {
                 if (MessageBox.Show(string.Format("Apakah anda yakin ingin menghapus data?"), "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    
-                    conn.Open();
-                    string query = "DELETE FROM TBGURU WHERE IS_DELETED='True';";
-                    SqlCommand cmd = new SqlCommand(query, conn);
-                    cmd.ExecuteNonQuery();
-
-                    refresh();
-
-                    MessageBox.Show("Data berhasil dihapus");
+                    int jumlahTrash = dtgv1.Rows.Count;
+                    try
+                    {
+                        conn.Open();
+                        string query = "DELETE FROM TBGURU WHERE IS_DELETED='True';";
+                        SqlCommand cmd = new SqlCommand(query, conn);
+                        cmd.ExecuteNonQuery();
+                        refresh();
+                        int sisatrash = dtgv1.Rows.Count;
+                        int berhasil = jumlahTrash - sisatrash;
+                        MessageBox.Show($"{"Data Gagal Dihapus Tersisa "}{sisatrash} \nData Berhasil Dihapus {berhasil} ");
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
                 }
             }
         }
@@ -60,16 +67,23 @@ namespace cobaGuiSQL
             {
                 if (MessageBox.Show(string.Format("Apakah anda yakin ingin mengembalikan data?"), "Konfirmasi", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-
+                    int jumlahTrash = dtgv1.Rows.Count;
+                    try
+                    {
                     conn.Open();
-                    string query = "UPDATE TBGURU SET IS_DELETED = 'False'  WHERE NIP NOT IN (SELECT NIP FROM TBGURU WHERE IS_DELETED = 'False' )";
+                    string query = "UPDATE TBGURU SET IS_DELETED = 'False', IS_DELETED_AT = NULL  WHERE NIP NOT IN (SELECT NIP FROM TBGURU WHERE IS_DELETED = 'False' )";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.ExecuteNonQuery();
-
                     refresh();
-                }
                     int sisatrash = dtgv1.Rows.Count;
-                    MessageBox.Show($"{"Data Gagal Di Hapus Tersisa "}{sisatrash}");               
+                    int berhasil = jumlahTrash - sisatrash;
+                    MessageBox.Show($"{"Data Gagal Direstore Tersisa "}{sisatrash} \nData Berhasil Direstore {berhasil} ");                    
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message);
+                    }
+                }
             }
         }
 
