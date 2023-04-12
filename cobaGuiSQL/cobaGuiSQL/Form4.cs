@@ -21,17 +21,18 @@ namespace cobaGuiSQL
         }
 
         private void Form4_Load(object sender, EventArgs e)
-        {
+        {            
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM TBGURU WHERE IS_DELETED = 'True'; ", conn);
-                DataTable dtbl = new DataTable();
-                sqlDa.Fill(dtbl);
-
-                dtgv1.AutoGenerateColumns = false;
-                dtgv1.DataSource = dtbl;
-
+                using (SqlDataAdapter sqlDa = new SqlDataAdapter("delete30days", conn))
+                {
+                    sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
+                    DataTable dt = new DataTable();
+                    sqlDa.Fill(dt);
+                    dtgv1.AutoGenerateColumns = false;
+                    dtgv1.DataSource = dt;
+                }
             }
         }
 
@@ -59,6 +60,7 @@ namespace cobaGuiSQL
                     }
                 }
             }
+            refresh();
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -71,7 +73,7 @@ namespace cobaGuiSQL
                     try
                     {
                     conn.Open();
-                    string query = "UPDATE TBGURU SET IS_DELETED = 'False', IS_DELETED_AT = NULL  WHERE NIP NOT IN (SELECT NIP FROM TBGURU WHERE IS_DELETED = 'False' )";
+                    string query = "UPDATE TBGURU SET IS_DELETED = 'False', UPDATED_AT = GETDATE()  WHERE NIP NOT IN (SELECT NIP FROM TBGURU WHERE IS_DELETED = 'False' )";
                     SqlCommand cmd = new SqlCommand(query, conn);
                     cmd.ExecuteNonQuery();
                     refresh();
@@ -85,6 +87,7 @@ namespace cobaGuiSQL
                     }
                 }
             }
+            refresh();
         }
 
         public void refresh()
@@ -100,6 +103,7 @@ namespace cobaGuiSQL
                 dtgv1.DataSource = dtbl;
 
             }
-        }        
+        }
+       
     }
 }

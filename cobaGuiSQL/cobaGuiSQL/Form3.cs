@@ -58,7 +58,7 @@ namespace cobaGuiSQL
             {
                 conn.Open();
 
-                string query = "UPDATE TBGURU SET NIP = @nip, NAMA_GURU = @nama, GENDER = @jk, MAPEL = @mapel, TANGGAL_LAHIR = @tgl, GAJI = @gaji, UPDATED_AT = @updated WHERE ID = @id";
+                string query = "UPDATE TBGURU SET NIP = @nip, NAMA_GURU = @nama, GENDER = @jk, MAPEL = @mapel, TANGGAL_LAHIR = @tgl, GAJI = @gaji, UPDATED_AT = GETDATE()  WHERE ID = @id";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", dataID);
@@ -77,7 +77,6 @@ namespace cobaGuiSQL
                 cmd.Parameters.AddWithValue("@mapel", textBox3.Text);
                 cmd.Parameters.AddWithValue("@tgl", dateTimePicker1.Value);
                 cmd.Parameters.AddWithValue("@gaji", textBox4.Text);
-                cmd.Parameters.AddWithValue("@updated", DateTime.Now);
 
                 cmd.ExecuteNonQuery();
 

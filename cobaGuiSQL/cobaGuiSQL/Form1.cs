@@ -34,21 +34,21 @@ namespace cobaGuiSQL
                 label2.Text = jumlah.ToString();
 
                 conn.Open();
-                /*SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM TBGURU WHERE IS_DELETED = 'false'; ", conn);
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM TBGURU WHERE IS_DELETED = 'false'; ", conn);
                 DataTable dtbl = new DataTable();
                 sqlDa.Fill(dtbl);
 
                 dtgv1.AutoGenerateColumns = false;
-                dtgv1.DataSource = dtbl;*/
+                dtgv1.DataSource = dtbl;
 
-                using (SqlDataAdapter sqlDa = new SqlDataAdapter("delete30days", conn))
+                /*using (SqlDataAdapter sqlDa = new SqlDataAdapter("delete30days", conn))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
                     DataTable dt = new DataTable();
                     sqlDa.Fill(dt);
                     // Lakukan sesuatu dengan data yang telah diambil, misalnya tampilkan di DataGridView
                     dtgv1.DataSource = dt;
-                }
+                }*/
 
                 dtgv1.CellContentClick += dataGridView1_CellContentClick;
 
@@ -92,7 +92,8 @@ namespace cobaGuiSQL
                     form3.dataMAPEL = MAPEL;
                     form3.dataTANGGAL = TANGGAL_LAHIR;
                     form3.dataGAJI = GAJI;
-                    form3.Show();
+                    form3.ShowDialog();
+                    RefreshDataGridView();
                 }
             }
         }
@@ -100,7 +101,7 @@ namespace cobaGuiSQL
         private void DeleteData(string ID)
         {
             string connectionString = "Server=DESKTOP-SD43K3H\\SQLEXPRESS;Initial Catalog=DBGURU;Integrated Security=True;";
-            string query = "UPDATE TBGURU SET IS_DELETED = 1, IS_DELETED_AT = GETDATE()  WHERE ID = @id";
+            string query = "UPDATE TBGURU SET IS_DELETED = 1, UPDATED_AT = GETDATE()  WHERE ID = @id";
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
@@ -115,7 +116,8 @@ namespace cobaGuiSQL
         private void Insert_Click(object sender, EventArgs e)
         {
             Form2 form2 = new Form2();
-            form2.Show();
+            form2.ShowDialog();
+            RefreshDataGridView();
         }
 
         public void RefreshDataGridView()
@@ -149,12 +151,8 @@ namespace cobaGuiSQL
         private void button2_Click(object sender, EventArgs e)
         {
             Form4 form4 = new Form4();
-            form4.Show();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
+            form4.ShowDialog();
             RefreshDataGridView();
-        }        
+        }              
     }
 }
