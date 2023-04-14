@@ -57,12 +57,12 @@ namespace cobaGuiSQL
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 conn.Open();
-
-                string query = "UPDATE TBGURU SET NIP = @nip, NAMA_GURU = @nama, GENDER = @jk, MAPEL = @mapel, TANGGAL_LAHIR = @tgl, GAJI = @gaji, UPDATED_AT = GETDATE()  WHERE ID = @id";
+                
+                string query = "UPDATE TBGURU SET NIP = @nip, NAMA_GURU = @nama, GENDER = @jk, MAPEL = @mapel, TANGGAL_LAHIR = @tgl, GAJI = @gaji, UPDATED_AT = GETDATE()  WHERE ID = @id ";
 
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", dataID);
-                cmd.Parameters.AddWithValue("@nip", textBox1.Text);
+                cmd.Parameters.AddWithValue("@nip", textBox1.Text);                
                 cmd.Parameters.AddWithValue("@nama", textBox2.Text);
 
                 if (radioButton1.Checked)
@@ -78,11 +78,10 @@ namespace cobaGuiSQL
                 cmd.Parameters.AddWithValue("@tgl", dateTimePicker1.Value);
                 cmd.Parameters.AddWithValue("@gaji", textBox4.Text);
 
-                cmd.ExecuteNonQuery();
+                cmd.ExecuteNonQuery();                
 
                 conn.Close();
             }
-            MessageBox.Show("Berhasil Update Data");
         }
 
         private void button2_Click(object sender, EventArgs e)

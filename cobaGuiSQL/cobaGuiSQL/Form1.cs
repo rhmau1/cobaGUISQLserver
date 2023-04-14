@@ -1,14 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Data.SqlClient;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing;
+using System.Windows.Forms;
 
 namespace cobaGuiSQL
 {
@@ -31,7 +25,7 @@ namespace cobaGuiSQL
                 int jumlah = (int)command.ExecuteScalar();
                 conn.Close();
 
-                label2.Text = jumlah.ToString();
+                label2.Text = jumlah.ToString();                
 
                 conn.Open();
                 SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM TBGURU WHERE IS_DELETED = 'false'; ", conn);
@@ -40,7 +34,7 @@ namespace cobaGuiSQL
 
                 dtgv1.AutoGenerateColumns = false;
                 dtgv1.DataSource = dtbl;
-
+                
                 /*using (SqlDataAdapter sqlDa = new SqlDataAdapter("delete30days", conn))
                 {
                     sqlDa.SelectCommand.CommandType = CommandType.StoredProcedure;
@@ -153,6 +147,37 @@ namespace cobaGuiSQL
             Form4 form4 = new Form4();
             form4.ShowDialog();
             RefreshDataGridView();
-        }              
+        }        
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string keyword = textBox1.Text;
+
+                conn.Open();
+                // query data dari database
+                string query = "SELECT * FROM TBGURU WHERE IS_DELETED = 'false' AND (NIP LIKE '%' + @keyword + '%' OR NAMA_GURU LIKE '%' + @keyword + '%' OR GENDER LIKE '%' + @keyword + '%' OR MAPEL LIKE '%' + @keyword + '%' OR GAJI LIKE '%' + @keyword + '%') ";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@keyword", keyword);
+
+                // mengisi DataGridView dengan data terbaru dari database
+                SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                DataTable table = new DataTable();
+                adapter.Fill(table);
+
+                dtgv1.AutoGenerateColumns = false;
+                dtgv1.DataSource = table;
+                int jumlah = dtgv1.RowCount;
+
+                label2.Text = jumlah.ToString();
+            }
+        }        
+     
     }
 }
