@@ -79,12 +79,18 @@ namespace cobaGuiSQL
                 cmd.Parameters.AddWithValue("@gaji", textBox4.Text);
 
                 cmd.ExecuteNonQuery();                
+                MessageBox.Show("Berhasil Update Data");
 
                 conn.Close();
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void button3_Click(object sender, EventArgs e)
         {
             this.Close();
         }
